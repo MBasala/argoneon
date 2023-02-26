@@ -80,6 +80,12 @@ then
         aur_pkglist="raspi-gpio-git"
         python_pkglist="smbus rpi-gpio psutil"
         CHECKPLATFORM="Manjaro"
+elif $(echo ${pretty_name} | grep 'Arch' &>/dev/null); [ $? -eq 0 ]
+then
+        pacman_pkglist=(i2c-tools python-pip base-devel yay smartmontools)
+        aur_pkglist="raspi-gpio-git"
+        python_pkglist="smbus rpi-gpio psutil"
+        CHECKPLATFORM="Arch"
 fi
 elif $(echo ${pretty_name} | grep 'Arch' &>/dev/null); [ $? -eq 0 ]
 then
