@@ -30,7 +30,7 @@ fi
 
 
 argon_check_pkg() {
-    if [ "$CHECKPLATFORM" = "Manjaro" ]; then
+    if [ "$CHECKPLATFORM" = "Manjaro" ] || [ "$CHECKPLATFORM" = "Arch" ]; then
         RESULT=$(pacman -Q "$1" 2> /dev/null)
         if [ $? == 0 ]; then
             echo "OK"
@@ -81,8 +81,15 @@ then
         python_pkglist="smbus rpi-gpio psutil"
         CHECKPLATFORM="Manjaro"
 fi
+elif $(echo ${pretty_name} | grep 'Arch' &>/dev/null); [ $? -eq 0 ]
+then
+        pacman_pkglist=(i2c-tools python-pip base-devel yay smartmontools)
+        aur_pkglist="raspi-gpio-git"
+        python_pkglist="smbus rpi-gpio psutil"
+        CHECKPLATFORM="Arch"
+fi
 
-if [ "$CHECKPLATFORM" = "Manjaro" ]
+if [ "$CHECKPLATFORM" = "Manjaro" ] || [ "$CHECKPLATFORM" = "Arch" ]
 then
     for curpkg in ${pacman_pkglist[@]}; do
         sudo pacman -S --needed --noconfirm $curpkg
